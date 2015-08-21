@@ -1,0 +1,27 @@
+.main
+  .title Connect4
+  .title-line
+
+  .controls
+    button.new-game(ng-click="newGame()") New Game
+    .board-size
+      .rows
+        label(for="row-input") Rows
+        input(id="row-input" type="number" value="7" max="20" min="{{MIN_TO_WIN}}" minlength="1" ng-model="numRows" ng-change="newGame()")
+      .cols
+        label(for="col-input") Columns
+        input(id="col-input" type="number" value="6" max="20" min="{{MIN_TO_WIN}}" minlength="1" ng-model="numCols" ng-change="newGame()")
+
+  .board
+    .win-title(ng-class="{hidden: gameWinner == null}" ng-style="{background: gameWinner}") {{gameWinner.toUpperCase()}} Wins!
+    table.content(ng-class="{inactive: gameWinner != null}")
+      tr.board-row(ng-repeat="row in boardItems track by $index")
+        td.board-cell(ng-repeat="color in row track by $index" ng-click="onColumnHit($index)" class="{{color}}")
+          .circle
+          .filled-circle.circle
+
+  .active-player
+    span Active Player:
+    span.player-color(class="{{activePlayerColor}}") {{activePlayerColor.toUpperCase()}}
+
+
