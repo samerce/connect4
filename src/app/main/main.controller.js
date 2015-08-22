@@ -17,12 +17,12 @@
     };
 
     $scope.onColumnHit = function(col) {
-      if ($scope.winningColor != null) {
+      if ($scope.winningColor !== null) {
         $scope.newGame();
         return;
       }
       for (var i = $scope.boardItems.length - 1; i >= 0; i--) {
-        if ($scope.boardItems[i][col] == 'clear') {
+        if ($scope.boardItems[i][col] === 'clear') {
           $scope.boardItems[i][col] = $scope.activePlayerColor;
           $scope.activePlayerColor = $scope.playerColorToggle[$scope.activePlayerColor];
           $scope.updateGameStatus();
@@ -32,10 +32,10 @@
     };
 
     $scope.newGame = function() {
-      if ($scope.numRows == 0) {
+      if ($scope.numRows === 0) {
         $scope.numRows = $scope.MIN_TO_WIN;
       }
-      if ($scope.numCols == 0) {
+      if ($scope.numCols === 0) {
         $scope.numCols = $scope.MIN_TO_WIN;
       }
       $scope.numRows = Math.floor($scope.numRows);
@@ -52,7 +52,7 @@
       }
     };
     $scope.newGameIfInactive = function() {
-      if ($scope.winningColor != null) {
+      if ($scope.winningColor !== null) {
         $scope.newGame();
       }
     };
@@ -93,7 +93,7 @@
           if (newRow >= boardItems.length || newRow < 0 || newCol >= boardItems[newRow].length || newCol < 0) {
             continue;
           }
-          if (boardItems[newRow][newCol] == color) {
+          if (boardItems[newRow][newCol] === color) {
             numFilled++;
           } else {
             break;
