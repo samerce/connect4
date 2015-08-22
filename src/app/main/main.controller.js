@@ -17,7 +17,7 @@
     };
 
     $scope.onColumnHit = function(col) {
-      if ($scope.gameWinner != null) {
+      if ($scope.winningColor != null) {
         $scope.newGame();
         return;
       }
@@ -41,7 +41,7 @@
       $scope.numRows = Math.floor($scope.numRows);
       $scope.numCols = Math.floor($scope.numCols);
       $scope.boardItems = new Array($scope.numRows);
-      $scope.gameWinner = null;
+      $scope.winningColor = null;
       $scope.activePlayerColor = 'black';
 
       for (var i = 0; i < $scope.numRows; i++) {
@@ -52,7 +52,7 @@
       }
     };
     $scope.newGameIfInactive = function() {
-      if ($scope.gameWinner != null) {
+      if ($scope.winningColor != null) {
         $scope.newGame();
       }
     };
@@ -73,13 +73,12 @@
         for (var col = 0; col < boardItems[row].length; col++) {
           var color = boardItems[row][col];
           if (color === 'clear') continue;
-          if ($scope.hasWinningConnection(row, col, color)) {
-            return;
-          }
+          $scope.winningColor = $scope.findWinningColor(row, col, color);
+          if ($scope.winningColor) return;
         }
       }
     };
-    $scope.hasWinningConnection = function(row, col, color) {
+    $scope.findWinningColor = function(row, col, color) {
       var boardItems = $scope.boardItems;
       for (var i = 0; i < winDirections.length; i++) {
         var rowDelta = winDirections[i][1];
@@ -102,11 +101,10 @@
         }
 
         if (numFilled === $scope.MIN_TO_WIN) {
-          $scope.gameWinner = color;
-          return true;
+          return color;
         }
       }
-      return false;
+      return null;
     };
 
     $scope.newGame();

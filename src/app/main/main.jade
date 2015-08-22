@@ -13,8 +13,8 @@
         input(id="col-input" type="number" max="20" min="{{MIN_TO_WIN}}" minlength="1" ng-model="numCols" ng-change="newGame()")
 
   .board
-    .win-title(ng-class="{hidden: gameWinner == null}" ng-style="{background: gameWinner}") {{gameWinner.toUpperCase()}} Wins!
-    table.content(ng-class="{inactive: gameWinner != null}")
+    .win-title(ng-class="{hidden: winningColor == null}" ng-style="{background: winningColor}") {{winningColor.toUpperCase()}} Wins!
+    table.content(ng-class="{inactive: winningColor != null}")
       tr.board-row(ng-repeat="row in boardItems track by $index")
         td.board-cell(ng-repeat="color in row track by $index" ng-click="onColumnHit($index)" class="{{color}}")
           .circle
