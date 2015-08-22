@@ -64,15 +64,17 @@ body {
           outline: none;
           position: relative;
 
+          &.black, &.red {
+            .filled-circle {
+              opacity: 1;
+              transform: none;
+            }
+          }
           &.black .filled-circle {
             background: radial-gradient(circle, black, rgba(0,0,0,.4));
-            opacity: 1;
-            transform: none;
           }
           &.red .filled-circle {
             background: radial-gradient(circle, red, rgba(255,0,0,.4));
-            opacity: 1;
-            transform: none;
           }
           .circle {
             $circleSize: 30px;
@@ -95,7 +97,6 @@ body {
   }
 
   .controls {
-    margin: 0 auto;
     text-align: center;
 
     button.new-game {

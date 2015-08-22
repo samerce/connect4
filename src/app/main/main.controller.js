@@ -71,31 +71,42 @@
       var boardItems = $scope.boardItems;
       for (var row = 0; row < boardItems.length; row++) {
         for (var col = 0; col < boardItems[row].length; col++) {
-          for (var i = 0; i < winDirections.length; i++) {
-            var rowDelta = winDirections[i][1];
-            var colDelta = winDirections[i][0];
-            var color = boardItems[row][col];
-            if (color === 'clear') continue;
-            var numFilled = 1;
-            var newRow = row;
-            var newCol = col;
-            for (var j = 0; j < $scope.MIN_TO_WIN; j++) {
-              newRow = newRow + rowDelta;
-              newCol = newCol + colDelta;
-              if (newRow >= boardItems.length || newRow < 0 || newCol >= boardItems[newRow].length || newCol < 0) continue;
-              if (boardItems[newRow][newCol] == color) {
-                numFilled++;
-              } else {
-                break;
-              }
-            }
-            if (numFilled === $scope.MIN_TO_WIN) {
-              $scope.gameWinner = color;
-              return;
-            }
+          var color = boardItems[row][col];
+          if (color === 'clear') continue;
+          if ($scope.hasWinningConnection(row, col, color)) {
+            return;
           }
         }
       }
+    };
+    $scope.hasWinningConnection = function(row, col, color) {
+      var boardItems = $scope.boardItems;
+      for (var i = 0; i < winDirections.length; i++) {
+        var rowDelta = winDirections[i][1];
+        var colDelta = winDirections[i][0];
+        var newRow = row;
+        var newCol = col;
+        var numFilled = 1;
+
+        for (var j = 0; j < $scope.MIN_TO_WIN; j++) {
+          newRow += rowDelta;
+          newCol += colDelta;
+          if (newRow >= boardItems.length || newRow < 0 || newCol >= boardItems[newRow].length || newCol < 0) {
+            continue;
+          }
+          if (boardItems[newRow][newCol] == color) {
+            numFilled++;
+          } else {
+            break;
+          }
+        }
+
+        if (numFilled === $scope.MIN_TO_WIN) {
+          $scope.gameWinner = color;
+          return true;
+        }
+      }
+      return false;
     };
 
     $scope.newGame();
